@@ -19,7 +19,14 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       - name: NPM Install
         run: npm install
-        
+     
+      - name: Debug secrets
+        run: |
+          if [-z "${{ secrets.Dockerhub_username }}" ]; then echo "USERNAME IS EMPTY";else echo "username OK";fi
+          if [ -z "${{ secrets.Dockerhub_token }}" ]; then echo "TOKEN IS EMPTY";
+          else echo "token OK";fi
+
+
       - name: Docker build and push
         run: |
           # Run commands to build and push Docker images
