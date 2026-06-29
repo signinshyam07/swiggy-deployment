@@ -27,12 +27,15 @@ jobs:
           else echo "token OK";fi
 
 
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.Dockerhub_username }}
+          password: ${{ secrets.Dockerhub_token }}
       - name: Docker build and push
         run: |
-          # Run commands to build and push Docker images
           docker build -t swiggy-clone .
           docker tag swiggy-clone shyamsunder07/swiggy-clone:latest
-          echo "${{ secrets.Dockerhub_token }}" | docker login docker.io -u "${{ secrets.Dockerhub_username }}" --password-stdin
           docker push shyamsunder07/swiggy-clone:latest
         
   deploy:
